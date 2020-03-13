@@ -1,5 +1,7 @@
+import com.google.gson.Gson;
 import iplCricketGame.IPLAnalyser;
 import iplCricketGame.IPLAnalyserException;
+import iplCricketGame.IPLBatsmanCSV;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -30,6 +32,18 @@ public class IPLAnalyserTest {
             iplAnalyser.loadIplData(WRONG_FILE_PATH);
         } catch (IPLAnalyserException e) {
             Assert.assertEquals(IPLAnalyserException.ExceptionType.IPL_FILE_PROBLEM, e.type);
+        }
+    }
+
+    @Test
+    public void givenCricketMostRunData_WhenSorted_ShouldReturnMostRun() {
+        try {
+            iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
+            String sortedCricketData = iplAnalyser.getSortedCricketData();
+            IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
+            Assert.assertEquals(83.2, mostRunCsv[0].battingAvg, 0.0);
+        } catch (IPLAnalyserException e) {
+            e.printStackTrace();
         }
     }
 
