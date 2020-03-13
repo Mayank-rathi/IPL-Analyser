@@ -47,5 +47,17 @@ public class IPLAnalyserTest {
         }
     }
 
+    @Test
+    public void givenCricketMostStrikingRatesData_WhenSorted_ShouldReturnMostStrikingRates() {
+        try {
+            iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
+            String sortedCricketData = iplAnalyser.getSortedCricketData();
+            IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
+            Assert.assertEquals(134.62, mostRunCsv[0].strikRate, 0.0);
+        } catch (IPLAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
