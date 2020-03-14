@@ -82,10 +82,18 @@ public class IplCricketAnalyserTest {
 
     @Test
     public void givenCricketerWithgreatBattingAvgAndBestStrikeRate_WhenSorted_ShouldReturnMostStrikingRatesWithGreatAvg() throws IPLAnalyserException {
-            iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
-            String sortedCricketData = iplAnalyser.getSortedCricketData(SortField.AVERAGE);
-            IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
-            Assert.assertEquals(83.2, mostRunCsv[0].battingAvg,0.0);
+        iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
+        String sortedCricketData = iplAnalyser.getSortedCricketData(SortField.AVERAGE);
+        IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
+        Assert.assertEquals(83.2, mostRunCsv[0].battingAvg, 0.0);
+    }
+
+    @Test
+    public void givenCricketerWithBestBattingAvgAndMaxRun_WhenSorted_ShouldReturnMostRun() throws IPLAnalyserException {
+        iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
+        String sortedCricketData = iplAnalyser.getSortedCricketData(SortField.RUN);
+        IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
+        Assert.assertEquals("David Warner", mostRunCsv[0].playeName);
 
     }
 
