@@ -16,12 +16,13 @@ public class CricketCsvDto {
         strikeRate = iplBatsmanCSV.strikRate;
         fours = iplBatsmanCSV.fours;
         sixes = iplBatsmanCSV.sixes;
-        playerName =iplBatsmanCSV.playerName;
+        playerName = iplBatsmanCSV.playerName;
+
     }
 
     public CricketCsvDto(IplBowlingCSV mostBowlingCsv) {
         average = mostBowlingCsv.average;
-        playerName=mostBowlingCsv.playerName;
-
+        playerName = mostBowlingCsv.playerName;
+        strikeRate = mostBowlingCsv.strikeRate;
     }
 }

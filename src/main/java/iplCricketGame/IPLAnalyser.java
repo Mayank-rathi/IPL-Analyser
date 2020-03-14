@@ -22,11 +22,15 @@ public class IPLAnalyser {
         this.sortedMap.put(SortField.AVERAGE, Comparator.comparing(ipldata -> ipldata.average));
         this.sortedMap.put(SortField.STRIKE_RATE, Comparator.comparing(ipldata -> ipldata.strikeRate));
         this.sortedMap.put(SortField.NO_OF_4S_AND_6S, Comparator.comparing(ipldata -> ipldata.fours + ipldata.sixes));
-        this.sortedMap.put(SortField.STRIKE_RATE_WITH_6S_4S, Comparator.comparing(ipldata -> ipldata.strikeRate + ipldata.sixes + ipldata.fours));
-        this.sortedMap.put(SortField.GREAT_STRIKE_RATE_AND_BEST_AVG, Comparator.comparing(ipldata -> ipldata.strikeRate + ipldata.average));
-        this.sortedMap.put(SortField.BEST_RUNS_WITH_BEST_AVG, Comparator.comparing(ipldata -> ipldata.runs + ipldata.average));
-    }
 
+        Comparator<CricketCsvDto> foursAndSix = Comparator.comparing(ipldata -> ipldata.fours + ipldata.fours);
+        this.sortedMap.put(SortField.STRIKE_RATE_WITH_6S_4S, foursAndSix.thenComparing(ipldata -> ipldata.strikeRate));
+        Comparator<CricketCsvDto> average = Comparator.comparing(ipldata -> ipldata.average);
+        this.sortedMap.put(SortField.GREAT_STRIKE_RATE_AND_BEST_AVG, average.thenComparing(ipldata -> ipldata.strikeRate));
+        Comparator<CricketCsvDto> runsWithAvg = Comparator.comparing(ipldata -> ipldata.runs);
+        this.sortedMap.put(SortField.BEST_RUNS_WITH_BEST_AVG, runsWithAvg.thenComparing(ipldata -> ipldata.average));
+
+    }
 
 
     public int loadIplData(Cricket cricket, String... csvFilePath) {
