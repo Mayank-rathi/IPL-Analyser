@@ -12,10 +12,17 @@ import java.util.*;
 
 public class IPLAnalyser {
     List<IPLBatsmanCSV> iplCSVList = null;
+    Map<SortField, Comparator<IPLBatsmanCSV>> sortedMap;
 
     public IPLAnalyser() {
         this.iplCSVList = new ArrayList<>();
+        this.sortedMap = new HashMap<>();
+
+        this.sortedMap.put(SortField.AVERAGE, Comparator.comparing(ipldata -> ipldata.battingAvg));
+        this.sortedMap.put(SortField.STRIKE_RATE, Comparator.comparing(ipldata -> ipldata.strikRate));
+        this.sortedMap.put(SortField.NO_OF_4S_AND_6S, Comparator.comparing(ipldata -> ipldata.fours + ipldata.sixes));
     }
+
 
     public int loadIplData(String csvFilePath) {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {

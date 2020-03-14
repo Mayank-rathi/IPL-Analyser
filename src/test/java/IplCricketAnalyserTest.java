@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class IPLAnalyserTest {
+public class IplCricketAnalyserTest {
     private static IPLAnalyser iplAnalyser;
     private static final String IPL_MOST_RUNS_FILE_PATH = "./src/test/resources/IPL2019FactsheetMostRuns.csv";
     private static final String WRONG_FILE_PATH = "./src/main/resources/IPL2019FactsheetMostRuns.csv";
@@ -57,6 +57,27 @@ public class IPLAnalyserTest {
         } catch (IPLAnalyserException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void givenCricketMax4sAnd6sData_WhenSorted_ShouldReturnMostStrikingRates() {
+        try {
+            iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
+            String sortedCricketData = iplAnalyser.getSortedCricketData();
+            IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
+            Assert.assertEquals(134.62, mostRunCsv[0].strikRate, 0.0);
+        } catch (IPLAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIPLMostRunData_WhenSorted_ShouldReturnBest4sAnd6sHittingCount() throws IPLAnalyserException {
+        iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
+        String sortedStrikeRateData = iplAnalyser.getSortedCricketData();
+        IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedStrikeRateData, IPLBatsmanCSV[].class);
+        Assert.assertEquals(45, mostRunCsv[0].fours + mostRunCsv[0].sixes);
+
     }
 
 }
