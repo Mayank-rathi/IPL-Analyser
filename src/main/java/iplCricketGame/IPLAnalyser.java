@@ -29,7 +29,7 @@ public class IPLAnalyser {
         this.sortedMap.put(SortField.GREAT_STRIKE_RATE_AND_BEST_AVG, average.thenComparing(ipldata -> ipldata.strikeRate));
         Comparator<CricketCsvDto> runsWithAvg = Comparator.comparing(ipldata -> ipldata.runs);
         this.sortedMap.put(SortField.BEST_RUNS_WITH_BEST_AVG, runsWithAvg.thenComparing(ipldata -> ipldata.average));
-
+        this.sortedMap.put(SortField.ECONOMY_RATE,Comparator.comparing(ipldata -> ipldata.economyRate));
     }
 
 
