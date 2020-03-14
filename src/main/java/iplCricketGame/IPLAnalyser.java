@@ -23,6 +23,7 @@ public class IPLAnalyser {
         this.sortedMap.put(SortField.STRIKE_RATE, Comparator.comparing(ipldata -> ipldata.strikRate));
         this.sortedMap.put(SortField.NO_OF_4S_AND_6S, Comparator.comparing(ipldata -> ipldata.fours + ipldata.sixes));
         this.sortedMap.put(SortField.STRIKE_RATE_WITH_6S_4S, Comparator.comparing(ipldata -> ipldata.strikRate + ipldata.sixes + ipldata.fours));
+        this.sortedMap.put(SortField.GREAT_STRIKE_RATE_AND_BEST_AVG, Comparator.comparing(ipldata -> ipldata.strikRate + ipldata.battingAvg));
     }
 
 

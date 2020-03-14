@@ -79,16 +79,14 @@ public class IplCricketAnalyserTest {
 
     }
 
+
     @Test
-    public void givenCricketMax4sAnd6sData_WhenSorted_ShouldReturnMostStrikingRatesWith4s6s() {
-        try {
+    public void givenCricketerWithgreatBattingAvgAndBestStrikeRate_WhenSorted_ShouldReturnMostStrikingRatesWithGreatAvg() throws IPLAnalyserException {
             iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
-            String sortedCricketData = iplAnalyser.getSortedCricketData(SortField.STRIKE_RATE);
+            String sortedCricketData = iplAnalyser.getSortedCricketData(SortField.AVERAGE);
             IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
-            Assert.assertEquals("Ishant Sharma", mostRunCsv[0].playeName);
-        } catch (IPLAnalyserException e) {
-            e.printStackTrace();
-        }
+            Assert.assertEquals(83.2, mostRunCsv[0].battingAvg,0.0);
+
     }
 
 }
