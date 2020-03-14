@@ -29,7 +29,9 @@ public class IPLAnalyser {
         this.sortedMap.put(SortField.GREAT_STRIKE_RATE_AND_BEST_AVG, average.thenComparing(ipldata -> ipldata.strikeRate));
         Comparator<CricketCsvDto> runsWithAvg = Comparator.comparing(ipldata -> ipldata.runs);
         this.sortedMap.put(SortField.BEST_RUNS_WITH_BEST_AVG, runsWithAvg.thenComparing(ipldata -> ipldata.average));
-        this.sortedMap.put(SortField.ECONOMY_RATE,Comparator.comparing(ipldata -> ipldata.economyRate));
+        this.sortedMap.put(SortField.ECONOMY_RATE, Comparator.comparing(ipldata -> ipldata.economyRate));
+        Comparator<CricketCsvDto> bestStrikeRateWith4And5Wickets = Comparator.comparing(ipldata -> ipldata.fourWickets + ipldata.fiveWickets);
+        this.sortedMap.put(SortField.STRIKE_RATE_WITH_4_AND_5_WICKET, bestStrikeRateWith4And5Wickets.thenComparing(ipldata -> ipldata.strikeRate));
     }
 
 

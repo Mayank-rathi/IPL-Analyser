@@ -118,6 +118,13 @@ public class IplCricketAnalyserTest {
         IplBowlingCSV[] mostBowlingCsv = new Gson().fromJson(sortedData, IplBowlingCSV[].class);
         Assert.assertEquals("Ben Cutting", mostBowlingCsv[0].playerName);
     }
+    @Test
+    public void givenIPLMostBowlingData_WhenSorted_ShouldReturnBestStrikingRateWith5WicketsAnd4Wickets() {
 
+        iplAnalyser.loadIplData(IPLAnalyser.Cricket.WICKETS,IPL_MOST_BOWLING_FILE_PATH);
+        String sortedData = iplAnalyser.getSortedCricketData(SortField.STRIKE_RATE_WITH_4_AND_5_WICKET);
+        IplBowlingCSV[] mostBowlingCsv = new Gson().fromJson(sortedData, IplBowlingCSV[].class);
+        Assert.assertEquals("Lasith Malinga", mostBowlingCsv[0].playerName);
+    }
 }
 
