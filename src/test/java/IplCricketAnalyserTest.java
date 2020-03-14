@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import iplCricketGame.IPLAnalyser;
 import iplCricketGame.IPLAnalyserException;
 import iplCricketGame.IPLBatsmanCSV;
+import iplCricketGame.SortField;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class IplCricketAnalyserTest {
     }
 
     @Test
-    public void givenIndiaCensusData_WithWrongFile_ShouldThrowException() {
+    public void givenIndiaCensusData_WithWrongFile_ShouldThrowException() throws IPLAnalyserException {
         try {
             ExpectedException exceptionRule = ExpectedException.none();
             exceptionRule.expect(IPLAnalyserException.class);
@@ -39,7 +40,7 @@ public class IplCricketAnalyserTest {
     public void givenCricketMostRunData_WhenSorted_ShouldReturnMostRun() {
         try {
             iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
-            String sortedCricketData = iplAnalyser.getSortedCricketData();
+            String sortedCricketData = iplAnalyser.getSortedCricketData(SortField.AVERAGE);
             IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
             Assert.assertEquals(83.2, mostRunCsv[0].battingAvg, 0.0);
         } catch (IPLAnalyserException e) {
@@ -48,36 +49,46 @@ public class IplCricketAnalyserTest {
     }
 
     @Test
-    public void givenCricketMostStrikingRatesData_WhenSorted_ShouldReturnMostStrikingRates() {
+    public void givenCricketMostStrikingRatesData_WhenSorted_ShouldReturnplayerName() {
         try {
             iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
-            String sortedCricketData = iplAnalyser.getSortedCricketData();
+            String sortedCricketData = iplAnalyser.getSortedCricketData(SortField.STRIKE_RATE);
             IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
-            Assert.assertEquals(134.62, mostRunCsv[0].strikRate, 0.0);
+            Assert.assertEquals("Ishant Sharma", mostRunCsv[0].playeName);
         } catch (IPLAnalyserException e) {
             e.printStackTrace();
         }
     }
 
-    @Test
-    public void givenCricketMax4sAnd6sData_WhenSorted_ShouldReturnMostStrikingRates() {
-        try {
-            iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
-            String sortedCricketData = iplAnalyser.getSortedCricketData();
-            IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
-            Assert.assertEquals(134.62, mostRunCsv[0].strikRate, 0.0);
-        } catch (IPLAnalyserException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Test
     public void givenIPLMostRunData_WhenSorted_ShouldReturnBest4sAnd6sHittingCount() throws IPLAnalyserException {
         iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
-        String sortedStrikeRateData = iplAnalyser.getSortedCricketData();
+        String sortedStrikeRateData = iplAnalyser.getSortedCricketData(SortField.NO_OF_4S_AND_6S);
         IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedStrikeRateData, IPLBatsmanCSV[].class);
-        Assert.assertEquals(45, mostRunCsv[0].fours + mostRunCsv[0].sixes);
+        Assert.assertEquals(83, mostRunCsv[0].fours + mostRunCsv[0].sixes);
 
+    }
+
+    @Test
+    public void givenIPLMostRunData_WhenSorted_ShouldReturnBestStrikeRateWith4sAnd6sHittingCount() throws IPLAnalyserException {
+        iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
+        String sortedStrikeRateData = iplAnalyser.getSortedCricketData(SortField.STRIKE_RATE_WITH_6S_4S);
+        IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedStrikeRateData, IPLBatsmanCSV[].class);
+        Assert.assertEquals("Ishant Sharma", mostRunCsv[0].playeName);
+
+    }
+
+    @Test
+    public void givenCricketMax4sAnd6sData_WhenSorted_ShouldReturnMostStrikingRatesWith4s6s() {
+        try {
+            iplAnalyser.loadIplData(IPL_MOST_RUNS_FILE_PATH);
+            String sortedCricketData = iplAnalyser.getSortedCricketData(SortField.STRIKE_RATE);
+            IPLBatsmanCSV[] mostRunCsv = new Gson().fromJson(sortedCricketData, IPLBatsmanCSV[].class);
+            Assert.assertEquals("Ishant Sharma", mostRunCsv[0].playeName);
+        } catch (IPLAnalyserException e) {
+            e.printStackTrace();
+        }
     }
 
 }
