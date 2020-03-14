@@ -11,6 +11,7 @@ public class CricketCsvDto {
     public double economyRate;
     public int fourWickets;
     public int fiveWickets;
+    public int wickets;
 
 
     public CricketCsvDto(IPLBatsmanCSV iplBatsmanCSV) {
@@ -21,6 +22,7 @@ public class CricketCsvDto {
         sixes = iplBatsmanCSV.sixes;
         playerName = iplBatsmanCSV.playerName;
 
+
     }
 
     public CricketCsvDto(IplBowlingCSV mostBowlingCsv) {
@@ -30,6 +32,8 @@ public class CricketCsvDto {
         economyRate = mostBowlingCsv.economyRate;
         fourWickets = mostBowlingCsv.fourWickets;
         fiveWickets = mostBowlingCsv.fiveWickets;
+        wickets=mostBowlingCsv.wickets;
+
 
     }
 }

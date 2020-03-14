@@ -20,4 +20,8 @@ public class IplBowlingCSV {
 
     @CsvBindByName(column = "5w", required = true)
     public int fiveWickets;
+
+    @CsvBindByName(column = "Wkts", required = true)
+    public int wickets;
+
 }
