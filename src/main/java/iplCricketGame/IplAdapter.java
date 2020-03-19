@@ -36,6 +36,8 @@ public abstract class IplAdapter extends RuntimeException {
             return cricketMap;
         } catch (IOException e) {
             throw new IPLAnalyserException(e.getMessage(), IPLAnalyserException.ExceptionType.IPL_DATA_NOT_FOUND);
+        } catch (RuntimeException e) {
+            throw new IPLAnalyserException(e.getMessage(), IPLAnalyserException.ExceptionType.IPL_FILE_PROBLEM);
         }
     }
 }

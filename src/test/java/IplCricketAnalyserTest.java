@@ -7,6 +7,8 @@ import org.junit.rules.ExpectedException;
 
 public class IplCricketAnalyserTest {
     private static IPLAnalyser iplAnalyser;
+    private static CricketCsvDto[] mostPlayingCsv;
+    private static String sortedIplData;
     private static final String IPL_MOST_RUNS_FILE_PATH = "./src/test/resources/IPL2019FactsheetMostRuns.csv";
     private static final String WRONG_FILE_PATH = "./src/main/resources/IPL2019FactsheetMostRuns.csv";
     private static final String IPL_MOST_BOWLING_FILE_PATH = "./src/test/resources/IPL2019FactsheetMostWkts.csv";
@@ -148,12 +150,22 @@ public class IplCricketAnalyserTest {
         IplBowlingCSV[] mostBowlingCsv = new Gson().fromJson(sortedData, IplBowlingCSV[].class);
         Assert.assertEquals("Imran Tahir", mostBowlingCsv[0].playerName);
     }
+
     @Test
     public void givenIPLMostBowlingData_WhenSorted_ShouldReturnBestBattingAndBowlingAverage() {
-        iplAnalyser.loadIplData(IPLAnalyser.Cricket.ALL_ROUNDER,IPL_MOST_RUNS_FILE_PATH,IPL_MOST_BOWLING_FILE_PATH);
-        String sortedCricketData = iplAnalyser.getSortedCricketData(SortField.BEST_BATTING_BOWLING_AVG);
-        IplBowlingCSV[] mostBowlingCsv = new Gson().fromJson(sortedCricketData, IplBowlingCSV[].class);
-        Assert.assertEquals("Marcus Stoinis",mostBowlingCsv[0].playerName);
+        iplAnalyser.loadIplData(IPLAnalyser.Cricket.RUNS, IPL_MOST_RUNS_FILE_PATH, IPL_MOST_BOWLING_FILE_PATH);
+        sortedIplData = iplAnalyser.getSortedCricketData(SortField.BEST_BATTING_BOWLING_AVG);
+        mostPlayingCsv = new Gson().fromJson(sortedIplData, CricketCsvDto[].class);
+        Assert.assertEquals("Krishnappa Gowtham", mostPlayingCsv[0].playerName);
+    }
+
+    @Test
+    public void givenIPLMostBowlingData_WhenSorted_ShouldReturnAllRounderPlayerName() {
+        iplAnalyser.loadIplData(IPLAnalyser.Cricket.RUNS, IPL_MOST_RUNS_FILE_PATH, IPL_MOST_BOWLING_FILE_PATH);
+        sortedIplData = iplAnalyser.getSortedCricketData(SortField.BEST_ALL_ROUNDER);
+        mostPlayingCsv = new Gson().fromJson(sortedIplData, CricketCsvDto[].class);
+        Assert.assertEquals("Hardik Pandya", mostPlayingCsv[0].playerName);
     }
 }
+
 
